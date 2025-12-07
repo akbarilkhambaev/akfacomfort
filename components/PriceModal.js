@@ -2,17 +2,38 @@
 
 import { motion } from 'framer-motion';
 import { FaTimes } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function PriceModal({ isOpen, onClose, productName }) {
-  const [formData, setFormData] = useState({
+  const baseProducts = useMemo(
+    () => [
+      'Секционные радиаторы',
+      'Панельные радиаторы',
+      'Газовые котлы',
+      'Системы отопления',
+      'Другое',
+    ],
+    []
+  );
+
+  const buildDefaultForm = (product) => ({
+    product: product || baseProducts[0],
     name: '',
     phone: '',
     email: '',
     message: '',
   });
 
+  const [formData, setFormData] = useState(buildDefaultForm(productName));
+
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(buildDefaultForm(productName));
+      setSubmitted(false);
+    }
+  }, [isOpen, productName]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +53,7 @@ export default function PriceModal({ isOpen, onClose, productName }) {
     setTimeout(() => {
       onClose();
       setSubmitted(false);
-      setFormData({ name: '', phone: '', email: '', message: '' });
+      setFormData(buildDefaultForm(productName));
     }, 2000);
   };
 
@@ -82,6 +103,31 @@ export default function PriceModal({ isOpen, onClose, productName }) {
             className="price-form"
           >
             <div className="form-group">
+              <label htmlFor="product">Выберите продукт</label>
+              <div className="select-wrapper">
+                <select
+                  id="product"
+                  name="product"
+                  value={formData.product}
+                  onChange={handleChange}
+                >
+                  {[productName, ...baseProducts]
+                    .filter(Boolean)
+                    .filter(
+                      (value, index, array) => array.indexOf(value) === index
+                    )
+                    .map((option) => (
+                      <option
+                        key={option}
+                        value={option}
+                      >
+                        {option}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+            <div className="form-group">
               <label htmlFor="name">Ваше имя *</label>
               <input
                 type="text"
@@ -119,7 +165,7 @@ export default function PriceModal({ isOpen, onClose, productName }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group form-group--wide">
               <label htmlFor="message">Сообщение</label>
               <textarea
                 id="message"
@@ -133,7 +179,7 @@ export default function PriceModal({ isOpen, onClose, productName }) {
 
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary form-submit"
             >
               Отправить запрос
             </button>
