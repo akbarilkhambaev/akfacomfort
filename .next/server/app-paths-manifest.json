@@ -3,7 +3,8 @@
   "/contact/page": "app/contact/page.js",
   "/radiators/page": "app/radiators/page.js",
   "/radiators/sectional/page": "app/radiators/sectional/page.js",
-  "/products/page": "app/products/page.js",
   "/page": "app/page.js",
-  "/boilers/page": "app/boilers/page.js"
+  "/boilers/page": "app/boilers/page.js",
+  "/radiators/panel/page": "app/radiators/panel/page.js",
+  "/products/page": "app/products/page.js"
 }

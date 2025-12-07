@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import StoriesSlider from '@/components/StoriesSlider';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -43,29 +44,28 @@ export default function Home() {
           />
         </video>
         <div className="hero-overlay"></div>
-        {/* <div className="hero-content">
-          <div className="container">
-            <h1>AKFA COMFORT</h1>
-            <p>Премиум-качество для вашего комфорта</p>
-            <Link
-              href="/products"
-              className="btn btn-primary"
-            >
-              Смотреть каталог
-            </Link>
-          </div>
-        </div> */}
       </section>
+
+      <StoriesSlider />
 
       <section className="solutions-section">
         <div className="container">
+          <motion.span
+            className="solution-eyebrow"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+          >
+            #НАШИ РЕШЕНИЯ
+          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6 }}
           >
-            Отопительные решения
+            ОТОПИТЕЛЬНЫЕ РЕШЕНИЯ
           </motion.h2>
           <motion.p
             className="lead"
@@ -85,7 +85,10 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
           >
-            <motion.article className="solution-card" variants={itemVariants}>
+            <motion.article
+              className="solution-card"
+              variants={itemVariants}
+            >
               <h3>01. Секционные радиаторы</h3>
               <p>
                 Оптимальное соотношение надёжности и теплоотдачи. Подходит для
@@ -112,7 +115,10 @@ export default function Home() {
               </p>
             </motion.article>
 
-            <motion.article className="solution-card" variants={itemVariants}>
+            <motion.article
+              className="solution-card"
+              variants={itemVariants}
+            >
               <h3>02. Панельные радиаторы</h3>
               <p>
                 Высокая теплоотдача и надёжная конструкция — идеальны для
@@ -125,7 +131,10 @@ export default function Home() {
               </p>
             </motion.article>
 
-            <motion.article className="solution-card" variants={itemVariants}>
+            <motion.article
+              className="solution-card"
+              variants={itemVariants}
+            >
               <h3>03. Газовые котлы</h3>
               <p>
                 Комплексные решения для автономного и централизованного
