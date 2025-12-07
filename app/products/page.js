@@ -74,9 +74,9 @@ export default function ProductsPage() {
       </section>
 
       {/* Products Grid */}
-      <section className="products-section">
+      <section className="products-section products-catalog-section">
         <motion.div
-          className="products-grid"
+          className="products-grid products-catalog-grid"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

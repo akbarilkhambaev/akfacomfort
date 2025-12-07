@@ -1740,13 +1740,13 @@ footer {
   letter-spacing: -0.5px;
 }
 
-.products-section {
+.products-catalog-section {
   width: 100%;
   padding: 80px 40px;
   background-color: #0a0a0a;
 }
 
-.products-grid {
+.products-catalog-grid {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -1955,11 +1955,11 @@ footer {
     font-size: 16px;
   }
 
-  .products-section {
+  .products-catalog-section {
     padding: 60px 20px;
   }
 
-  .products-grid {
+  .products-catalog-grid {
     gap: 30px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
@@ -2009,11 +2009,11 @@ footer {
     font-size: 14px;
   }
 
-  .products-section {
+  .products-catalog-section {
     padding: 40px 15px;
   }
 
-  .products-grid {
+  .products-catalog-grid {
     gap: 20px;
     grid-template-columns: 1fr;
   }
