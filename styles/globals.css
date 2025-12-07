@@ -84,13 +84,35 @@ a {
 
 /* ========== HEADER ========== */
 .header {
-  background-color: #0a0a0a;
-  padding: 24px 0;
   position: sticky;
   top: 0;
-  z-index: 100;
-  border-bottom: 2px solid rgba(231, 76, 60, 0.1);
+  z-index: 120;
+  padding: 24px 0;
+  background: linear-gradient(
+    120deg,
+    rgba(30, 30, 30, 0.7) 0%,
+    rgba(10, 10, 10, 0.55) 60%,
+    rgba(10, 10, 10, 0.4) 100%
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 15% 10%,
+    rgba(231, 76, 60, 0.22),
+    transparent 55%
+  );
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .header-container {
@@ -101,6 +123,8 @@ a {
   justify-content: space-between;
   align-items: center;
   gap: 60px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Logo */
