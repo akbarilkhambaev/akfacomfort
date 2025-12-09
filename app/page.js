@@ -16,16 +16,109 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
+  hidden: { opacity: 0, y: '-18vh' },
+  visible: (index = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.6,
       ease: 'easeOut',
+      delay: index * 0.25,
     },
+  }),
+};
+
+const showcaseVisualVariants = {
+  hidden: { opacity: 0, x: '-65vw' },
+  visible: (index = 0) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: 'easeOut', delay: 0.2 + index * 0.25 },
+  }),
+};
+
+const showcaseContentVariants = {
+  hidden: { opacity: 0, x: '55vw' },
+  visible: (index = 0) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      ease: 'easeOut',
+      delay: 0.35 + index * 0.25,
+      when: 'beforeChildren',
+      staggerChildren: 0.1,
+    },
+  }),
+};
+
+const showcaseContentChildVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
   },
 };
+
+const showcaseListVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: (index = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: 'easeOut',
+      delay: index * 0.25,
+      staggerChildren: 0.08,
+    },
+  }),
+};
+
+const showcaseListItemVariants = {
+  hidden: { opacity: 0, x: '18vw' },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.4, ease: 'easeOut' },
+  },
+};
+
+const solutions = [
+  {
+    index: '01',
+    eyebrow: 'СЕКЦИОННЫЕ РАДИАТОРЫ',
+    title: 'Соотношение надёжности и теплоотдачи',
+    image: '/section-rad.webp',
+    leftColumn: ['MONZA', 'AVANGARD', 'CLASSIC 350', 'CLASSIC 500', 'CALIENTE'],
+    rightColumn: [
+      'BENEVENTO',
+      'BENEVENTO LITE',
+      'ETERNO',
+      'ETERNO LITE',
+      'ANDROMEDA',
+    ],
+    href: '/radiators/sectional',
+  },
+  {
+    index: '02',
+    eyebrow: 'ПАНЕЛЬНЫЕ РАДИАТОРЫ',
+    title: 'Плотная теплоотдача при минимальной глубине корпуса',
+    image: '/panel-rad.webp',
+    leftColumn: ['VENTO', 'VENTO LITE', 'VERTEX', 'VERTEX DUAL'],
+    rightColumn: ['LINEA', 'LINEA PLUS', 'PLANO', 'PLANO COMPACT'],
+    href: '/radiators/panel',
+  },
+  {
+    index: '03',
+    eyebrow: 'ГАЗОВЫЕ КОТЛЫ',
+    title: 'Комплексные решения для автономного и каскадного отопления',
+    image: '/gas-boiler.png',
+    leftColumn: ['CALIENTE PRO', 'CALIENTE COMPACT', 'CALIENTE SMART'],
+    rightColumn: ['CALIENTE INDUSTRIAL', 'CALIENTE CASCADE', 'CALIENTE HYBRID'],
+    href: '/boilers',
+  },
+];
 
 export default function Home() {
   return (
@@ -79,71 +172,89 @@ export default function Home() {
           </motion.p>
 
           <motion.div
-            className="solutions-grid"
+            className="solutions-showcase"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, amount: 0.2 }}
           >
-            <motion.article
-              className="solution-card"
-              variants={itemVariants}
-            >
-              <h3>01. Секционные радиаторы</h3>
-              <p>
-                Оптимальное соотношение надёжности и теплоотдачи. Подходит для
-                жилых и коммерческих помещений.
-              </p>
-              <ul>
-                <li>
-                  <Link href="/radiators/sectional">MONZA</Link>
-                </li>
-                <li>
-                  <Link href="/radiators/sectional">AVANGARD</Link>
-                </li>
-                <li>
-                  <Link href="/radiators/sectional">CLASSIC 350</Link>
-                </li>
-                <li>
-                  <Link href="/radiators/sectional">CLASSIC 500</Link>
-                </li>
-              </ul>
-              <p className="small">
-                <Link href="/radiators/sectional">
-                  Подробнее о секционных радиаторах →
-                </Link>
-              </p>
-            </motion.article>
+            {solutions.map((solution, solutionIndex) => (
+              <motion.article
+                key={solution.index}
+                className="solutions-showcase-card"
+                variants={itemVariants}
+                custom={solutionIndex}
+              >
+                <motion.div
+                  className="solutions-showcase-visual"
+                  variants={showcaseVisualVariants}
+                  custom={solutionIndex}
+                >
+                  <div className="solutions-showcase-frame">
+                    <img
+                      src={solution.image}
+                      alt={solution.eyebrow}
+                    />
+                  </div>
+                </motion.div>
 
-            <motion.article
-              className="solution-card"
-              variants={itemVariants}
-            >
-              <h3>02. Панельные радиаторы</h3>
-              <p>
-                Высокая теплоотдача и надёжная конструкция — идеальны для
-                современных систем отопления.
-              </p>
-              <p className="small">
-                <Link href="/radiators/panel">
-                  Подробнее о панельных радиаторах →
-                </Link>
-              </p>
-            </motion.article>
-
-            <motion.article
-              className="solution-card"
-              variants={itemVariants}
-            >
-              <h3>03. Газовые котлы</h3>
-              <p>
-                Комплексные решения для автономного и централизованного
-                отопления — надёжность и безопасность эксплуатации.
-              </p>
-              <p className="small">
-                <Link href="/boilers">Подробнее о котлах AKFA →</Link>
-              </p>
-            </motion.article>
+                <motion.div
+                  className="solutions-showcase-content"
+                  data-index={solution.index}
+                  variants={showcaseContentVariants}
+                  custom={solutionIndex}
+                >
+                  <motion.span
+                    className="solutions-showcase-eyebrow"
+                    variants={showcaseContentChildVariants}
+                  >
+                    {solution.eyebrow}
+                  </motion.span>
+                  <motion.h3 variants={showcaseContentChildVariants}>
+                    {solution.title}
+                  </motion.h3>
+                  <motion.div
+                    className="solutions-showcase-lists"
+                    variants={showcaseContentChildVariants}
+                  >
+                    <motion.ul
+                      variants={showcaseListVariants}
+                      custom={0}
+                    >
+                      {solution.leftColumn.map((item) => (
+                        <motion.li
+                          key={item}
+                          variants={showcaseListItemVariants}
+                        >
+                          <Link href={solution.href}>{item}</Link>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                    <motion.ul
+                      variants={showcaseListVariants}
+                      custom={1}
+                    >
+                      {solution.rightColumn.map((item) => (
+                        <motion.li
+                          key={item}
+                          variants={showcaseListItemVariants}
+                        >
+                          <Link href={solution.href}>{item}</Link>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  </motion.div>
+                  <motion.div variants={showcaseContentChildVariants}>
+                    <Link
+                      href={solution.href}
+                      className="solutions-showcase-link"
+                    >
+                      Подробнее →
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </motion.article>
+            ))}
           </motion.div>
 
           <motion.div

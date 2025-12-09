@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import PriceModal from '@/components/PriceModal';
 
 const containerVariants = {
@@ -202,17 +202,36 @@ export default function Boilers() {
               }`}
               variants={itemVariants}
             >
-              <button
-                className="product-header-button"
-                onClick={() => toggleExpand(boiler.id)}
-              >
-                <div className="product-title-row">
-                  <h3>{boiler.name}</h3>
-                  <span className="product-number">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                </div>
-              </button>
+              {(() => {
+                const isExpanded = expandedId === boiler.id;
+                return (
+                  <button
+                    className="product-header-button"
+                    onClick={() => toggleExpand(boiler.id)}
+                  >
+                    <div className="product-title-row">
+                      <h3>{boiler.name}</h3>
+                      <div className="product-title-meta">
+                        <span
+                          className={`product-toggle-hint ${
+                            isExpanded ? 'active' : ''
+                          }`}
+                        >
+                          {isExpanded ? 'Свернуть' : 'Раскрыть'}
+                        </span>
+                        <FaChevronDown
+                          className={`product-toggle-icon ${
+                            isExpanded ? 'rotated' : ''
+                          }`}
+                        />
+                        <span className="product-number">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })()}
 
               <motion.div
                 className="product-content"
