@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname, useRouter } from 'next/navigation';
 
 const stories = [
   {
@@ -94,14 +95,20 @@ const stories = [
 export default function StoriesSlider() {
   const [activeStory, setActiveStory] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [ctaClosing, setCtaClosing] = useState(false);
   const sliderRef = useRef(null);
+  const pathname = usePathname();
+  const router = useRouter();
+  const navTimeoutRef = useRef(null);
 
   const openStory = (story) => {
+    setCtaClosing(false);
     setActiveStory(story);
     setModalOpen(true);
   };
 
   const closeModal = () => {
+    setCtaClosing(false);
     setModalOpen(false);
     setActiveStory(null);
   };
@@ -117,6 +124,22 @@ export default function StoriesSlider() {
     });
   };
 
+  // Cleanup pending navigation timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (navTimeoutRef.current) {
+        clearTimeout(navTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Close modal on any route change (e.g., CTA navigation)
+  useEffect(() => {
+    if (modalOpen) {
+      setModalOpen(false);
+      setActiveStory(null);
+    }
+  }, [pathname, modalOpen]);
   return (
     <section className="stories-section">
       <div className="container stories-wrapper">
@@ -174,7 +197,7 @@ export default function StoriesSlider() {
       </div>
 
       <AnimatePresence>
-        {modalOpen && activeStory && (
+        {!ctaClosing && modalOpen && activeStory && (
           <motion.div
             className="story-modal-overlay"
             initial={{ opacity: 0 }}
@@ -218,6 +241,16 @@ export default function StoriesSlider() {
                 <Link
                   href={activeStory.href}
                   className="story-modal-link"
+                  prefetch={false}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCtaClosing(true);
+                    closeModal();
+                    // Allow exit animation to run before navigating away
+                    navTimeoutRef.current = setTimeout(() => {
+                      router.push(activeStory.href);
+                    }, 220);
+                  }}
                 >
                   {activeStory.ctaLabel}
                 </Link>

@@ -42,44 +42,59 @@ export default function Header() {
           </Link>
         </motion.div>
 
-        <button
-          className="mobile-toggle"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        {!mobileMenuOpen && (
+          <button
+            className={`mobile-toggle ${mobileMenuOpen ? 'open' : ''}`}
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="primary-navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        )}
 
         <nav className={`nav ${mobileMenuOpen ? 'active' : ''}`}>
-          {['Главная', 'Радиаторы', 'Котлы', 'Каталог', 'Контакты'].map((item, i) => {
-            const href = [
-              '/',
-              '/radiators',
-              '/boilers',
-              '/products',
-              '/contact',
-            ][i];
-            const isCTA = item === 'Контакты';
+          <button
+            type="button"
+            className="mobile-close"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Закрыть меню"
+          >
+            ×
+          </button>
+          {['Главная', 'Радиаторы', 'Котлы', 'Каталог', 'Контакты'].map(
+            (item, i) => {
+              const href = [
+                '/',
+                '/radiators',
+                '/boilers',
+                '/products',
+                '/contact',
+              ][i];
+              const isCTA = item === 'Контакты';
 
-            return (
-              <motion.div
-                key={item}
-                custom={i}
-                variants={navVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <Link
-                  href={href}
-                  className={`nav-link ${isCTA ? 'nav-link-cta' : ''}`}
+              return (
+                <motion.div
+                  key={item}
+                  custom={i}
+                  variants={navVariants}
+                  initial="hidden"
+                  animate="visible"
                 >
-                  {item}
-                </Link>
-              </motion.div>
-            );
-          })}
+                  <Link
+                    href={href}
+                    className={`nav-link ${isCTA ? 'nav-link-cta' : ''}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item}
+                  </Link>
+                </motion.div>
+              );
+            }
+          )}
         </nav>
       </div>
     </header>
