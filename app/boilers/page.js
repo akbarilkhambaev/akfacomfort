@@ -29,44 +29,21 @@ const itemVariants = {
   },
 };
 
+const formatDescription = (text) =>
+  text.replace(/\n\s*\n/g, '<br /><br />').replace(/\n/g, '<br />');
+
 const boilers = [
   {
     id: 1,
-    name: 'AKFA Comfort',
-    description: 'Компактный газовый котёл для жилых помещений',
+    name: 'AKFA',
+    description:
+      '<b>Безопасная эксплуатация</b>\n Двухконтурный газовый котел AKFA – универсальный способ круглый год иметь автономный доступ к горячей воде и возможности включать систему теплого пола, когда потребуется. Ведь всегда будут те, кому слишком жарко и те, кто постоянно мёрзнет. \n\n <b>Современное оборудование</b> \n Настенный отопительный прибор решит вопросы с комфортной температурой дома и избавит от трудностей во время плановых отключений горячей воды.',
     specs: [
-      'Мощность: 10-24 кВт',
-      'КПД: 92%',
-      'Тип установки: настенный',
-      'Автоматика: встроенная',
-      'Тип топлива: природный газ',
-      'Гарантия: 5 лет',
+      'Теплопроизводительность: 15,1-34,8 кВт',
+      'Расход газа: 1,09 – 3,3 м3/ч',
+      'Площадь отопления: 15 - 35 кВт',
     ],
-    images: [
-      '/boilers/akfa-comfort1.png',
-      '/boilers/akfa-comfort2.png',
-      '/boilers/akfa-comfort3.png',
-      '/boilers/akfa-comfort4.png',
-    ],
-  },
-  {
-    id: 2,
-    name: 'AKFA Pro',
-    description: 'Мощный котёл для больших объектов',
-    specs: [
-      'Мощность: 30-60 кВт',
-      'КПД: 95%',
-      'Тип установки: напольный',
-      'Система управления: автоматическая',
-      'Тип топлива: природный газ/жидкое топливо',
-      'Гарантия: 7 лет',
-    ],
-    images: [
-      '/boilers/akfa-pro1.png',
-      '/boilers/akfa-pro2.png',
-      '/boilers/akfa-pro3.png',
-      '/boilers/akfa-pro4.png',
-    ],
+    images: ['/kotel/1.jpg', '/kotel/2.jpg'],
   },
 ];
 
@@ -246,7 +223,12 @@ export default function Boilers() {
                 {/* Микрослайдер с фотографиями */}
                 <ProductImageSlider images={boiler.images} />
 
-                <p className="description">{boiler.description}</p>
+                <p
+                  className="description"
+                  dangerouslySetInnerHTML={{
+                    __html: formatDescription(boiler.description),
+                  }}
+                />
                 <ul className="specs">
                   {boiler.specs.map((spec, i) => (
                     <li key={i}>{spec}</li>
@@ -256,7 +238,7 @@ export default function Boilers() {
                   className="btn btn-secondary"
                   onClick={() => openModal(boiler.name)}
                 >
-                  Узнать цену
+                  Свяжитесь с нами
                 </button>
               </motion.div>
 

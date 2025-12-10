@@ -1,8 +1,6 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/boilers/page": "app/boilers/page.js",
-  "/radiators/page": "app/radiators/page.js",
-  "/contact/page": "app/contact/page.js",
   "/page": "app/page.js",
-  "/products/page": "app/products/page.js"
+  "/radiators/sectional/page": "app/radiators/sectional/page.js",
+  "/radiators/panel/page": "app/radiators/panel/page.js",
+  "/boilers/page": "app/boilers/page.js"
 }

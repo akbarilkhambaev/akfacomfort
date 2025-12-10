@@ -29,46 +29,24 @@ const itemVariants = {
   },
 };
 
+const formatDescription = (text) =>
+  text.replace(/\n\s*\n/g, '<br /><br />').replace(/\n/g, '<br />');
+
 const products = [
   {
     id: 1,
-    name: 'LIDERLINE 500',
-    description: 'Компактный панельный радиатор с высокой теплоотдачей',
+    name: 'AKFA',
+    description:
+      '<b>Надёжность в эксплуатации</b> \n Эксплуатационные характеристики панельных радиаторов отопления просто замечательны: высокая степень теплоотдачи при низкой теплопроводной инерции, что позволяет легко выполнять регулировку температуры в помещении. \n\n <b>Современное оборудование</b> \n Стальные панельные радиаторы отопления производятся различных размеров. Компании, выпускающие отопительное оборудование, уделяют большое внимание современному дизайну и простоте монтажа радиаторов отопления.',
     specs: [
-      'Материал: Сталь',
-      'Тепловая мощность: до 1500 Вт',
-      'Тип подключения: нижнее',
-      'Высота: 500 мм',
-      'Ширина: 400-1600 мм',
-      'Рабочее давление: 10 бар',
-      'Средний расход: 50 л/мин',
+      'Объём воды: 5 л',
+      'Высота радиаторов: 300, 400, 500, 600 мм',
+      'Длина радиаторов: от 400 мм до 2000 мм',
+      'Масса радиатора: 7 - 60 кг',
+      'Рабочее давление: 6 бар',
+      'Максимальное давление: 10 Бар',
     ],
-    images: [
-      '/liderline/liderline1.png',
-      '/liderline/liderline2.png',
-      '/liderline/liderline3.png',
-      '/liderline/liderline4.png',
-    ],
-  },
-  {
-    id: 2,
-    name: 'LIDERLINE 600',
-    description: 'Мощный панельный радиатор для больших помещений',
-    specs: [
-      'Материал: Сталь',
-      'Тепловая мощность: до 2000 Вт',
-      'Тип подключения: нижнее',
-      'Высота: 600 мм',
-      'Ширина: 400-1600 мм',
-      'Рабочее давление: 10 бар',
-      'Средний расход: 60 л/мин',
-    ],
-    images: [
-      '/liderline/liderline1.png',
-      '/liderline/liderline2.png',
-      '/liderline/liderline3.png',
-      '/liderline/liderline4.png',
-    ],
+    images: ['/panel/1.jpg', '/panel/2.jpg'],
   },
 ];
 
@@ -248,7 +226,12 @@ export default function PanelRadiators() {
                 {/* Микрослайдер с фотографиями */}
                 <ProductImageSlider images={product.images} />
 
-                <p className="description">{product.description}</p>
+                <p
+                  className="description"
+                  dangerouslySetInnerHTML={{
+                    __html: formatDescription(product.description),
+                  }}
+                />
                 <ul className="specs">
                   {product.specs.map((spec, i) => (
                     <li key={i}>{spec}</li>
@@ -258,7 +241,7 @@ export default function PanelRadiators() {
                   className="btn btn-secondary"
                   onClick={() => openModal(product.name)}
                 >
-                  Узнать цену
+                  Свяжитесь с нами
                 </button>
               </motion.div>
 

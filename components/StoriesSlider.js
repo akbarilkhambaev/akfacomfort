@@ -133,13 +133,12 @@ export default function StoriesSlider() {
     };
   }, []);
 
-  // Close modal on any route change (e.g., CTA navigation)
+  // Close modal on route changes (e.g., CTA navigation)
   useEffect(() => {
-    if (modalOpen) {
-      setModalOpen(false);
-      setActiveStory(null);
-    }
-  }, [pathname, modalOpen]);
+    setModalOpen(false);
+    setActiveStory(null);
+    setCtaClosing(false);
+  }, [pathname]);
   return (
     <section className="stories-section">
       <div className="container stories-wrapper">
@@ -246,10 +245,6 @@ export default function StoriesSlider() {
                     e.preventDefault();
                     setCtaClosing(true);
                     closeModal();
-                    // Allow exit animation to run before navigating away
-                    navTimeoutRef.current = setTimeout(() => {
-                      router.push(activeStory.href);
-                    }, 220);
                   }}
                 >
                   {activeStory.ctaLabel}
